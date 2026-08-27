@@ -38,7 +38,7 @@ const Header = () => {
   };
   return (
     <>
-      <div className=" flex items-center justify-between h-20  bordr-b border-gray-200 bg-white rounded-2xl p-3">
+      <div className=" flex items-center justify-between h-20  border-b border-gray-200 bg-white rounded-2xl p-3">
         <div>
           <p className="text-sm text-gray-500">Welcome back,</p>
           <h1 className="text-xl font-bold text-gray-800">{fullName} 👋</h1>
@@ -46,7 +46,7 @@ const Header = () => {
         <div className="flex items-center gap-5">
           {/* Put position: relative on a container box so that any inner element with position: absolute stays locked inside that specific parent instead of moving relative to the whole page */}
 
-          <div className="relative">
+          {/* <div className="relative">
             <Search
               size={20}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -57,7 +57,7 @@ const Header = () => {
               placeholder="Search..."
               className="w-64 rounded-lg border px-4 py-2 pl-10"
             />
-          </div>
+          </div>*/}
           <button type="button">
             <Bell size={21} />
           </button>

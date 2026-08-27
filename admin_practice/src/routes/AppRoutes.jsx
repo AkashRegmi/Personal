@@ -15,6 +15,7 @@ const AppRoutes = () => {
       {/* Routes  that follow  WITH MainLayout */}
       <Route element={<ProtectedRoute />}>
         {/* Routes  that follow  WITH MainLayout */}
+
         <Route element={<MainLayout />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/products" element={<ProductsPage />} />
