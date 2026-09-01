@@ -4,7 +4,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../common/ThreeDotLoading";
 import NotFound from "../common/NotFound";
 
-const ProductTable = ({ apiProducts, isPending, handelDeleteIcon }) => {
+const ProductTable = ({
+  apiProducts,
+  isPending,
+  handelDeleteIcon,
+  handalEditIcon,
+}) => {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       {isPending ? (
@@ -111,6 +116,7 @@ const ProductTable = ({ apiProducts, isPending, handelDeleteIcon }) => {
                       <button
                         type="button"
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-blue-50 hover:text-blue-600"
+                        onClick={() => handalEditIcon(product)}
                       >
                         <Edit size={17} />
                       </button>
