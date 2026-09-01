@@ -1,10 +1,9 @@
-
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema } from "../../schemas/product.schema";
 import { addProduct } from "../../services/product.service";
 import Modal from "../common/Modal";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 const AddProductModal = ({ isOpen, onClose }) => {
@@ -34,10 +33,13 @@ const AddProductModal = ({ isOpen, onClose }) => {
     onClose();
   };
   //Using the react query
+  const queryClient = useQueryClient();
   const addProductMutation = useMutation({
     mutationFn: addProduct,
     onSuccess: (data) => {
       toast.success(data?.message);
+      //this is for to reload the the getAllapi so thatupdate the ui
+      queryClient.invalidateQueries({ queryKey: ["products"] });
       reset();
       onClose();
     },

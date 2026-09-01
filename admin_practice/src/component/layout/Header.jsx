@@ -1,7 +1,7 @@
-import { Search, Bell, LogOut } from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
 import { useState } from "react";
 import ConfirmModal from "../common/ConfirmModal";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLogOutModelOpen, setIsLogOutModelOpen] = useState(false);
