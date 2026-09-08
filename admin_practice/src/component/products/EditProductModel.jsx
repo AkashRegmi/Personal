@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 
 const EditProductModel = ({ isOpen, onClose, product }) => {
-  console.log(product);
   const {
     register,
     handleSubmit,

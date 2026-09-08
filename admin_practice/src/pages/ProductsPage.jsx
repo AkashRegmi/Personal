@@ -1,16 +1,23 @@
 import { useState } from "react";
+
 import ProductPageHeader from "../component/products/ProductPageHeader";
 import ProductTable from "../component/products/ProductTable";
 import AddProductModal from "../component/products/AddProductModal";
 import DeleteProductModel from "../component/products/DeleteProductModel";
 import { useProducts } from "../hooks/useProducts";
 import EditProductModel from "../component/products/EditProductModel";
+import SingleProductModel from "../component/products/SingleProductModel";
+import { getSingleProduct } from "../services/product.service";
 
 const ProductsPage = () => {
+  // Get the ID from the URL parameters
+  // const { id } = useParams();
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   const [isDeleteModelOpen, setDeleteModelOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isViewModelOpen, setViewModelOpen] = useState(false);
+
   const { data, isPending } = useProducts();
   const handleOpenAddProduct = () => {
     setIsAddProductModalOpen(true);
@@ -37,6 +44,12 @@ const ProductsPage = () => {
   const handleCloseEditProduct = () => {
     setEditModalOpen(false);
   };
+  // thandelhe isfor the view option
+  const handelViewButton = async (productId) => {
+    const product = await getSingleProduct(productId?._id);
+    setSelectedProduct(product);
+    setViewModelOpen(true);
+  };
 
   return (
     <div className="min-h-full bg-gray-100 p-6">
@@ -48,6 +61,7 @@ const ProductsPage = () => {
           isPending={isPending}
           handelDeleteIcon={handelDeleteIcon}
           handalEditIcon={handalEditIcon}
+          handelViewButton={handelViewButton}
         />
         <AddProductModal
           isOpen={isAddProductModalOpen}
@@ -60,6 +74,11 @@ const ProductsPage = () => {
         />
         <DeleteProductModel
           isOpen={isDeleteModelOpen}
+          onClose={handelOnCloseButton}
+          product={selectedProduct}
+        />
+        <SingleProductModel
+          isOpen={isViewModelOpen}
           onClose={handelOnCloseButton}
           product={selectedProduct}
         />

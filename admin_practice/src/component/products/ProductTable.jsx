@@ -3,13 +3,16 @@ import "react-loading-skeleton/dist/skeleton.css";
 // import { products } from "../../dummyData/product.service";
 import Loading from "../common/ThreeDotLoading";
 import NotFound from "../common/NotFound";
+import { useState } from "react";
 
 const ProductTable = ({
   apiProducts,
   isPending,
   handelDeleteIcon,
   handalEditIcon,
+  handelViewButton,
 }) => {
+  const [isVerticalButtonOpen, setVerticalButtonOpen] = useState(null);
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       {isPending ? (
@@ -56,7 +59,11 @@ const ProductTable = ({
 
             <tbody className="divide-y divide-gray-100 ">
               {apiProducts?.products.map((product) => (
-                <tr key={product._id} className="transition hover:bg-gray-50">
+                <tr
+                  key={product._id}
+                  className="transition hover:bg-gray-50"
+                  onClick={() => handelViewButton(product)}
+                >
                   {/* Product */}
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
@@ -116,7 +123,9 @@ const ProductTable = ({
                       <button
                         type="button"
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-blue-50 hover:text-blue-600"
-                        onClick={() => handalEditIcon(product)}
+                        onClick={(event) => {
+                          (event.stopPropagation(), handalEditIcon(product));
+                        }}
                       >
                         <Edit size={17} />
                       </button>
@@ -124,17 +133,42 @@ const ProductTable = ({
                       <button
                         type="button"
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-red-50 hover:text-red-600"
-                        onClick={() => handelDeleteIcon(product)}
+                        onClick={(event) => {
+                          (event.stopPropagation(), handelDeleteIcon(product));
+                        }}
                       >
                         <Trash2 size={17} />
                       </button>
-
-                      <button
-                        type="button"
-                        className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100"
-                      >
-                        <MoreVertical size={17} />
-                      </button>
+                      <div className=" relative">
+                        {" "}
+                        <button
+                          type="button"
+                          className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100"
+                          onClick={() =>
+                            setVerticalButtonOpen(
+                              isVerticalButtonOpen === product?._id
+                                ? null
+                                : product._id,
+                            )
+                          }
+                        >
+                          <MoreVertical size={17} />
+                        </button>
+                        {isVerticalButtonOpen === product?._id && (
+                          <div className="absolute right-0 top-10 z-50 w-32 rounded-lg border bg-white p-1 shadow-lg">
+                            <button
+                              type="button"
+                              className="w-full rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                              onClick={() => {
+                                handelViewButton(product);
+                                setVerticalButtonOpen(null);
+                              }}
+                            >
+                              View
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </td>
                 </tr>

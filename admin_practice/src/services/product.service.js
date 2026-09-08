@@ -55,3 +55,10 @@ export const updateProduct = async (id, productData) => {
 
   return response.data;
 };
+
+//to get the individual product
+
+export const getSingleProduct = async (productId) => {
+  const response = await axios.get(`${API_URL}/${productId}`);
+  return response.data;
+};
