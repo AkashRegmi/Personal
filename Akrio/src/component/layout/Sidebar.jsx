@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Logo from "../../../public/images/image1.png";
+import Logo from "../../../public/images/Image1.png";
 import { Apple, LayoutDashboard, ShoppingCart } from "lucide-react";
 
 const navbar = [
