@@ -12,7 +12,7 @@ import ProductsPageCustomer from "../component/store/ProductsPageCustomer";
 import ProductDetailsPage from "../component/store/ProductDetailsPage";
 import { CartPage } from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
-import CustomerOrderPage from "../pages/customerOrderPage";
+import CustomerOrderPage from "../pages/CustomerOrderPage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import RegisterPage from "../pages/RegisterPage";
 
