@@ -21,6 +21,10 @@ const AddProductModal = ({ isOpen, onClose }) => {
       description: "",
       price: undefined,
       tags: [""],
+      category: "",
+      brand: "",
+      stock: "",
+      isFeatured: false,
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -102,13 +106,74 @@ const AddProductModal = ({ isOpen, onClose }) => {
           <input
             id="product-price"
             type="number"
-            step="0.01"
+            step="1"
             placeholder="Enter product price"
             {...register("price")}
             className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-[#293354] focus:ring-2 focus:ring-[#293354]/10"
           />
           {errors.price && (
             <p className="mt-1 text-xs text-red-500">{errors.price.message}</p>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="product-brand"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
+            Brand of Product
+          </label>
+
+          <input
+            id="product-brand"
+            type="text"
+            placeholder="Enter product price"
+            {...register("brand")}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-[#293354] focus:ring-2 focus:ring-[#293354]/10"
+          />
+          {errors.brand && (
+            <p className="mt-1 text-xs text-red-500">{errors.brand.message}</p>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="product-category"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
+            Category of Product
+          </label>
+
+          <input
+            id="product-category"
+            type="text"
+            placeholder="Enter product category"
+            {...register("category")}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-[#293354] focus:ring-2 focus:ring-[#293354]/10"
+          />
+          {errors.category && (
+            <p className="mt-1 text-xs text-red-500">
+              {errors.category.message}
+            </p>
+          )}
+        </div>
+        {/* stock */}
+        <div>
+          <label
+            htmlFor="product-stock"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
+            Stock of Product
+          </label>
+
+          <input
+            id="product-stock"
+            type="number"
+            step="1"
+            placeholder="Enter product price"
+            {...register("stock")}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-[#293354] focus:ring-2 focus:ring-[#293354]/10"
+          />
+          {errors.stock && (
+            <p className="mt-1 text-xs text-red-500">{errors.stock.message}</p>
           )}
         </div>
         {/* Description */}
@@ -195,6 +260,15 @@ const AddProductModal = ({ isOpen, onClose }) => {
               <p className="mt-1 text-xs text-red-500">{errors.tags.message}</p>
             )}
           </div>
+        </div>
+        {/* The isFeatured Boolean Toggle Checkbox */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <input
+            type="checkbox"
+            id="isFeatured"
+            {...register("isFeatured")} // React Hook Form sets this as a native true/false state
+          />
+          <label htmlFor="isFeatured">Feature this product on homepage</label>
         </div>
         {/* Footer */}
         <div className="mt-7 flex justify-end gap-3 border-t border-gray-100 pt-5">

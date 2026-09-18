@@ -1,7 +1,12 @@
 import { Download, Package, Plus, Search } from "lucide-react";
 
-
-const ProductPageHeader = ({ onAddProduct }) => {
+const ProductPageHeader = ({
+  onAddProduct,
+  onSearchProduct,
+  apiProducts,
+  handleExport,
+  isExporting,
+}) => {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
       <div className="flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between">
@@ -33,16 +38,19 @@ const ProductPageHeader = ({ onAddProduct }) => {
               type="text"
               placeholder="Search products..."
               className="w-full rounded-xl border border-gray-300 bg-gray-50 py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-[#293354] focus:bg-white focus:ring-2 focus:ring-[#293354]/10 sm:w-64"
+              onChange={onSearchProduct}
             />
           </div>
 
           {/* Export */}
           <button
             type="button"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={handleExport}
+            disabled={isExporting}
           >
             <Download size={18} />
-            Export
+            {isExporting ? "Exporting..." : "Export"}
           </button>
 
           {/* Add Product */}
@@ -64,7 +72,8 @@ const ProductPageHeader = ({ onAddProduct }) => {
         </p>
 
         <p className="text-xs font-medium text-gray-600">
-          Total Products: <span className="text-[#293354]">4</span>
+          Total Products:{" "}
+          <span className="text-[#293354]">{apiProducts?.total}</span>
         </p>
       </div>
     </div>

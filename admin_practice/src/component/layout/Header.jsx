@@ -18,8 +18,8 @@ const Header = () => {
       };
 
   const fullName =
-    `${user.firstName || ""} ${user.lastName || ""} `.trim() ||
-    user.username ||
+    `${user.name || ""} ${user.name || ""} `.trim() ||
+    user.name ||
     "Guest";
 
   //function
@@ -76,7 +76,7 @@ const Header = () => {
             <div>
               <p className="font-semibold">{fullName}</p>
               <p className="text-sm text-gray-500">
-                {user.username || "guest"}
+                {user.name || "guest"}
               </p>
             </div>
             <button

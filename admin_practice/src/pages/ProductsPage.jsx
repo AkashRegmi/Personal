@@ -4,10 +4,12 @@ import ProductPageHeader from "../component/products/ProductPageHeader";
 import ProductTable from "../component/products/ProductTable";
 import AddProductModal from "../component/products/AddProductModal";
 import DeleteProductModel from "../component/products/DeleteProductModel";
-import { useProducts } from "../hooks/useProducts";
+import { useExportProducts, useProducts } from "../hooks/useProducts";
 import EditProductModel from "../component/products/EditProductModel";
 import SingleProductModel from "../component/products/SingleProductModel";
 import { getSingleProduct } from "../services/product.service";
+import { useDebounce } from "../hooks/useDebounce";
+import toast from "react-hot-toast";
 
 const ProductsPage = () => {
   // Get the ID from the URL parameters
@@ -17,8 +19,15 @@ const ProductsPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModelOpen, setViewModelOpen] = useState(false);
+  const [searchWord, setSearchedWord] = useState("");
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
-  const { data, isPending } = useProducts();
+  const debounceSearchTerm = useDebounce(searchWord, 500);
+  const { data, isPending } = useProducts(debounceSearchTerm, page, limit);
+  const { mutate: exportProducts, isPending: isExporting } =
+    useExportProducts();
+
   const handleOpenAddProduct = () => {
     setIsAddProductModalOpen(true);
   };
@@ -50,11 +59,57 @@ const ProductsPage = () => {
     setSelectedProduct(product);
     setViewModelOpen(true);
   };
+  //hanndel the Search one
+  const handleSearchWord = (e) => {
+    setSearchedWord(e.target.value);
+  };
+
+  //handel export one
+  const handleExport = () => {
+    exportProducts(
+      {},
+      {
+        onSuccess: (response) => {
+          const blob = response.data;
+          const url = window.URL.createObjectURL(blob);
+
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "products.xlsx";
+
+          document.body.appendChild(link);
+          link.click();
+
+          link.remove();
+
+          window.URL.revokeObjectURL(url);
+          toast.success("Export Successfullly");
+        },
+
+        onError: (error) => {
+          toast.error(`${error.response.message}` || "Export Failed ");
+        },
+      },
+    );
+  };
+  //for the pagination
+
+  const currentPage = data?.pagination?.page;
+  const handelOnPagechange = (newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="min-h-full bg-gray-100 p-6">
       <div className="space-y-6">
-        <ProductPageHeader onAddProduct={handleOpenAddProduct} />
+        <ProductPageHeader
+          apiProducts={data}
+          onAddProduct={handleOpenAddProduct}
+          onSearchProduct={handleSearchWord}
+          handleExport={handleExport}
+          isExporting={isExporting}
+  
+        />
 
         <ProductTable
           apiProducts={data}
@@ -62,6 +117,8 @@ const ProductsPage = () => {
           handelDeleteIcon={handelDeleteIcon}
           handalEditIcon={handalEditIcon}
           handelViewButton={handelViewButton}
+          page={currentPage}
+          onPageChange={handelOnPagechange}
         />
         <AddProductModal
           isOpen={isAddProductModalOpen}

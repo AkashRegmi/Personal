@@ -4,6 +4,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../common/ThreeDotLoading";
 import NotFound from "../common/NotFound";
 import { useState } from "react";
+import { extractDate } from "../../helper/DateFormatter";
+import Pagination from "../common/Pagination";
 
 const ProductTable = ({
   apiProducts,
@@ -11,6 +13,8 @@ const ProductTable = ({
   handelDeleteIcon,
   handalEditIcon,
   handelViewButton,
+  page,
+  onPageChange,
 }) => {
   const [isVerticalButtonOpen, setVerticalButtonOpen] = useState(null);
   return (
@@ -27,7 +31,7 @@ const ProductTable = ({
       ) : !apiProducts?.products?.length ? (
         <NotFound />
       ) : (
-        <div className=" hidden overflow-x-auto md:block">
+        <div className="  overflow-x-auto md:block">
           <table className="w-full min-w-225 text-left">
             <thead className="border-b border-blue-600 bg-gray-50">
               <tr>
@@ -49,6 +53,9 @@ const ProductTable = ({
 
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
                   Status
+                </th>
+                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Addeed Date
                 </th>
 
                 <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
@@ -115,6 +122,11 @@ const ProductTable = ({
                         In stock
                       </span>
                     )}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-700">
+                    {product?.createdAt
+                      ? extractDate(product.createdAt)
+                      : extractDate(Date)}
                   </td>
 
                   {/* Actions */}
@@ -188,29 +200,12 @@ const ProductTable = ({
           products
         </p>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            disabled
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-400"
-          >
-            Previous
-          </button>
-
-          <button
-            type="button"
-            className="rounded-lg bg-[#293354] px-3 py-1.5 text-sm text-white"
-          >
-            1
-          </button>
-
-          <button
-            type="button"
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50"
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          totalpage={apiProducts?.pagination?.totalPages}
+          page={page}
+          disable={isPending}
+          onPageChange={onPageChange}
+        />
       </div>
     </div>
   );

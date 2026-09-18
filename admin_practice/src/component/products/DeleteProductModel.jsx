@@ -4,6 +4,7 @@ import { deleteProduct } from "../../services/product.service";
 import toast from "react-hot-toast";
 
 const DeleteProductModel = ({ isOpen, onClose, product }) => {
+ 
   const handleClose = () => {
     onClose();
   };

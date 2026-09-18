@@ -5,12 +5,12 @@ import { Apple, LayoutDashboard, ShoppingCart } from "lucide-react";
 const navbar = [
   {
     label: "Dashboard",
-    path: "/",
+    path: "/admin",
     icon: <LayoutDashboard />,
   },
   {
     label: "Products",
-    path: "/products",
+    path: "/admin/products",
     icon: <Apple />,
   },
   {
