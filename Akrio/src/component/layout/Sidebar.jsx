@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import Logo from "../../../public/images/Image1.png";
 import { Apple, LayoutDashboard, ShoppingCart } from "lucide-react";
+
+const logo = "/images/Image1.png";
 
 const navbar = [
   {
@@ -26,18 +27,16 @@ const Sidebar = () => {
       <div className="h-20 flex items-center justify-center gap-3 border-b border-gray-600 bg-[#293354] px-4 py-3 sm:justify-start sm:gap-3 sm:px-4 ">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#354164] ">
           <img
-            src={Logo}
+            src={logo}
             alt="Akash REgmi Company Logo"
             className="h-7 w-7 object-contain"
           />
         </div>
         <div className=" hidden  flex-col sm:flex">
-          <h1 className="text-lg font-bold leading-none text-white">
-            Akash Regmi
-          </h1>
+          <h1 className="text-lg font-bold leading-none text-white">Akrio</h1>
 
           <p className="mt-1 text-[9px] font-bold tracking-widest text-gray-300">
-            STUDENT HUB
+            Akrio HUB
           </p>
         </div>
       </div>
